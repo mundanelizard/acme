@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  alice:
+    build: ./
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+    depends_on:
+      - mongodb
+    networks:
+      - local
+
+  bob:
+    build: ./
+    ports:
+      - 8081:8081
+    environment:
+      - PORT=8081
+    depends_on:
+      - mongodb
+    networks:
+      - local
+
+  dave:
+    build: ./
+    ports:
+      - 8082:8082
+    environment:
+      - PORT=8082
+    depends_on:
+      - mongodb
+    networks:
+      - local
+
+  server:
+    build: ./
+    ports:
+      - 8000:8000
+    environment:
+      - PORT=8000
+    depends_on:
+      - mongodb
+    networks:
+      - local
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - local
+
+networks:
+  local:
+
+volumes:
+  mongodb_data:
